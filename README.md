@@ -1,37 +1,80 @@
 # Probability Simulations
 
-Short Python projects where I explore probability and game theory by simulation rather than by formula.
+Python simulations of problems in probability and game theory, with results compared against theory where a closed form exists.
 
-## El Farol Bar Problem (agent-based model)
+## 1. El Farol Bar problem: an evolutionary minority game
 
-The El Farol Bar problem is a classic model of crowd behaviour: each round, everyone decides whether to go to a bar, but the bar is only enjoyable if it isn't overcrowded. There's no "correct" choice, because the right answer depends on what everyone else does.
+### Background
 
-In my model, 2,000 agents play for 5,000 rounds. Every round there is a shared forecast of whether the bar will be crowded. Each agent has a personal value `p`: the probability that they follow the forecast (otherwise they do the opposite). An agent who keeps ending up on the wrong side replaces their `p` with a new random value. At the end, I plot how `p` is distributed across the population.
+I first came across this model in a book on complexity science. It described a population that splits into extreme strategies, with each player predicting the next outcome from a "crib sheet" of past patterns. I built the model to see whether the finding holds up and what actually drives it.
 
-| File | Setup |
-|---|---|
-| `el_farol.py` | Forecast is effectively random (the memory length is too long to ever match a pattern), bar capacity 50% |
-| `el_farol_small_m.py` | Forecast based on the last 2 outcomes, bar capacity 60% |
+### Model
 
-### Findings
+Each round, *N* = 2,000 agents independently decide whether to go to a bar with capacity *cN*. Going is the right choice if attendance is at most *cN*; staying home is right if the bar is crowded. Because the "right" side is whichever side ends up in the minority (relative to capacity), there is no strategy everyone can follow successfully.
 
-**Random forecast:** the population splits into two extremes, agents who almost always follow the forecast and agents who almost always defy it. Cautious "in-between" strategies get weeded out.
+- **Shared forecast.** The outcome history is stored as a binary sequence (1 = going was right). The forecast takes the last *m* outcomes, finds the most recent earlier occurrence of that length-*m* pattern, and predicts the outcome that followed it. If the pattern has never occurred, the forecast is a fair coin.
+- **Agent strategy.** Agent *i* has a parameter *p<sub>i</sub>* ∈ [0, 1]: with probability *p<sub>i</sub>* they act on the forecast, otherwise they do the opposite. Agents with *p* ≈ 1 are followers, *p* ≈ 0 contrarians, *p* ≈ 0.5 effectively random.
+- **Scoring and evolution.** Each round an agent scores +1 for being on the right side and −1 otherwise. When an agent's cumulative score reaches −5, they discard their strategy: *p<sub>i</sub>* is redrawn from U(0, 1) and the score resets to 0.
+- **Measurement.** After *R* = 5,000 rounds, I record the distribution of *p*. With no selection, *p* stays uniform, so 10% of agents would fall in each tail (*p* < 0.1 and *p* > 0.9) and the mean would be 0.5.
 
-![Distribution of p with a random forecast](p_value_histogram.png)
+| File | Memory *m* | Capacity *c* |
+|---|---|---|
+| `el_farol.py` | 5,000 (equal to *R*, so no pattern ever matches: the forecast is effectively a fair coin) | 50% |
+| `el_farol_small_m.py` | 2 | 60% |
 
-**Memory-based forecast:** the population shifts heavily towards following the forecast; agents learn to trust a signal that carries real information.
+### Results
 
-![Distribution of p with a memory-based forecast](p_value_histogram_2.png)
+My first two runs changed both memory and capacity at once, so I ran all four combinations to separate their effects. Figures are averages over 5 runs per setting.
 
-**Caveat:** the second run changes both the memory length and the bar capacity, so the shift can't yet be attributed to the forecast alone. The next step is to rerun with memory length 2 and capacity 50% to isolate the effect.
+| Forecast | Capacity | *p* < 0.1 | *p* > 0.9 | Mean *p* | Rounds crowded |
+|---|---|---|---|---|---|
+| Random | 50% | 15% | 15% | 0.50 | 49% |
+| Random | 60% | 8% | 8% | 0.50 | 1% |
+| Memory (*m* = 2) | 50% | 15% | 16% | 0.50 | 49% |
+| Memory (*m* = 2) | 60% | 7% | 23% | 0.60 | 25% |
+| *Uniform baseline* | | *10%* | *10%* | *0.50* | |
 
-## Other simulations
+**Symmetric capacity produces self-segregation.** At 50% capacity, 31% of agents end up with extreme strategies, against 20% expected by chance, and the distribution stays symmetric (histogram below). Intermediate strategies are weeded out, consistent with the self-segregation result known from the evolutionary minority game.
 
-| File | What it does |
-|---|---|
-| `monte_carlo.py` | Estimates π by dropping random points in a unit square |
-| `pokemon.py` | Coupon collector problem: the expected number of packs needed to collect all 10 cards |
-| `random_walks.py` | A simple one-dimensional random walk |
+![Distribution of p: random forecast, 50% capacity](p_value_histogram.png)
+
+**Memory alone does nothing at symmetric capacity.** With *c* = 50%, the *m* = 2 forecast gives the same result as a coin. The outcome sequence has no exploitable structure, so remembering it doesn't help.
+
+**Memory pays off only when capacity is asymmetric.** At 60% capacity, going is usually right, and the memory forecast learns this regularity. Following it pays, so the mean of *p* rises to 0.60 and 23% of agents become strong followers. The effect limits itself: as followers grow in number they overfill the bar, which is then crowded in about a quarter of rounds.
+
+![Distribution of p: memory forecast, 60% capacity](p_value_histogram_2.png)
+
+With a random forecast at 60% capacity, average attendance (about 50%) stays below capacity, so the bar is almost never crowded and there is no systematic selection on *p*.
+
+### Does the crib sheet matter?
+
+The book attributes the behaviour to players' crib sheets, so I tested whether the pattern-matching memory plays any role. I varied the memory length *m*, where *m* = 0 means simply predicting the same outcome as last round. Figures are averages over 5 runs.
+
+| Memory *m* | 50%: tails (*p* < 0.1 / *p* > 0.9) | 50%: mean *p* | 60%: tails | 60%: mean *p* |
+|---|---|---|---|---|
+| 0 | 16% / 15% | 0.50 | 7% / 23% | 0.60 |
+| 1 | 16% / 15% | 0.50 | 7% / 23% | 0.60 |
+| 2 | 15% / 16% | 0.50 | 7% / 23% | 0.60 |
+| 3 | 15% / 15% | 0.50 | 7% / 22% | 0.60 |
+| Random (shared coin) | 15% / 15% | 0.50 | 8% / 8% | 0.50 |
+
+**Memory length makes no difference.** Every *m* from 0 to 3 gives the same result at each capacity. The crib sheet's pattern-matching is not what drives the behaviour.
+
+To find out what does, I ran one more control at 50% capacity in which each agent receives their **own** independent random forecast rather than a shared one. The polarisation disappears completely: the tails return to 10% / 10%, matching the uniform baseline.
+
+### Conclusions
+
+1. **Polarisation requires a shared signal, not a clever one.** When everyone reacts to the same forecast, agents form two opposing camps (followers and contrarians), and the minority-game payoff weeds out the middle. What the forecast says is irrelevant: a shared coin flip works just as well as pattern-matching.
+2. **The shift towards following comes from asymmetric capacity.** At 60% capacity, any forecast built from past outcomes, even "same as last time", picks up that going is usually right, so following pays. A random forecast carries no such information.
+3. **The crib sheet is a red herring in this model.** Its memory length has no measurable effect. This echoes a known result in the minority game literature: replacing the real history with a random one changes surprisingly little (Cavagna, *Physical Review E*, 1999).
+
+## 2. Other simulations
+
+| File | Problem | Simulation | Theory |
+|---|---|---|---|
+| `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 | Standard error ≈ 0.0016, shrinking like 1/√*N* |
+| `pokemon.py` | Coupon collector: expected packs to collect all *n* = 10 cards (10⁵ trials) | ≈ 29.29 | *n*·*H<sub>n</sub>* = 29.29 |
+| `random_walks.py` | Simple symmetric random walk, 100 steps | One sample path | Mean 0, variance *n*, so typical distance from the origin is about √*n* = 10 |
 
 ## Running
 
@@ -39,3 +82,5 @@ In my model, 2,000 agents play for 5,000 rounds. Every round there is a shared f
 pip install matplotlib
 python el_farol.py
 ```
+
+To reproduce the other two settings, change `m` and `limit` at the top of either El Farol script.
