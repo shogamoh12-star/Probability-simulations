@@ -64,9 +64,9 @@ To find out what does, I ran one more control at 50% capacity in which each agen
 
 ### Conclusions
 
-1. **Polarisation requires a shared signal, not a clever one.** When everyone reacts to the same forecast, agents form two opposing camps (followers and contrarians), and the minority-game payoff weeds out the middle. What the forecast says is irrelevant: a shared coin flip works just as well as pattern-matching.
-2. **The shift towards following comes from asymmetric capacity.** At 60% capacity, any forecast built from past outcomes, even "same as last time", picks up that going is usually right, so following pays. A random forecast carries no such information.
-3. **The crib sheet is a red herring in this model.** Its memory length has no measurable effect. This echoes a known result in the minority game literature: replacing the real history with a random one changes surprisingly little (Cavagna, *Physical Review E*, 1999).
+1. **Polarisation requires a shared signal, it doesn't require a clever or accurate forecast.** When everyone reacts to the same forecast, agents form two opposing camps (followers and contrarians), and the minority-game payoff weeds out the middle. What the forecast says is irrelevant: a shared coin flip works just as well as pattern-matching.
+2. **The crib sheet is a red herring in this model.** Its memory length has no measurable effect. I found a paper (Cavagna, *Physical Review E*, 1999) which supports my finding that forecasts and the method of forecasting do not affect the polarisation pattern.
+3. **The shift towards following comes from asymmetric capacity.** At 60% capacity, any forecast built from past outcomes, even "same as last time", picks up that going is usually right, so following wins. A random forecast carries no such information.
 
 ## 2. Other simulations
 
