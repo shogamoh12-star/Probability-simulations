@@ -32,9 +32,6 @@ In my model, 2,000 agents play for 5,000 rounds. Every round there is a shared f
 | `monte_carlo.py` | Estimates π by dropping random points in a unit square |
 | `pokemon.py` | Coupon collector problem: the expected number of packs needed to collect all 10 cards |
 | `random_walks.py` | A simple one-dimensional random walk |
-| `sum_of_squares.py` | Estimates the fraction of a unit cube that lies inside the unit sphere |
-| `sieve_of_eratosthenes.py` | Finds the primes up to 100 |
-| `sqrt(n).py` | Counts the primes below 1,000,000 by checking divisors up to √n |
 
 ## Running
 
