@@ -34,7 +34,7 @@ My first two runs changed both memory and capacity at once, so I ran all four co
 | Memory (*m* = 2) | 60% | 7% | 23% | 0.60 | 25% |
 | *Uniform baseline* | | *10%* | *10%* | *0.50* | |
 
-**Symmetric capacity produces self-segregation.** At 50% capacity, 31% of agents end up with extreme strategies, against 20% expected by chance, and the distribution stays symmetric (histogram below). Intermediate strategies are weeded out, consistent with the self-segregation result known from the evolutionary minority game.
+**Symmetric capacity produces self-segregation.** At 50% capacity, about 31% of agents end up with extreme strategies (run-to-run spread under 1 percentage point), against 20% expected by chance, and the distribution stays symmetric (histogram below). Intermediate strategies are weeded out, consistent with the self-segregation result known from the evolutionary minority game.
 
 ![Distribution of p: random forecast, 50% capacity](p_value_histogram.png)
 
