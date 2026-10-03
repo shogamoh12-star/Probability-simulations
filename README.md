@@ -6,7 +6,7 @@ Python simulations of problems in probability and game theory, with results comp
 
 ### Background
 
-I first came across this model in a book on complexity science. It described a population that splits into extreme strategies, with each player predicting the next outcome from a "crib sheet" of past patterns. I built the model to see whether the finding holds up and what actually drives it.
+I first came across this model in Neil Johnson's *Simply Complexity: A Clear Guide to Complexity Theory*. The book describes a population that splits into extreme strategies, with each player predicting the next outcome from a "crib sheet" of past patterns. I built the model to see whether the finding holds up and what actually drives it.
 
 ### Model
 
@@ -48,7 +48,7 @@ With a random forecast at 60% capacity, average attendance (about 50%) stays bel
 
 ### Does the crib sheet matter?
 
-The book attributes the behaviour to players' crib sheets, so I tested whether the pattern-matching memory plays any role. I varied the memory length *m*, where *m* = 0 means simply predicting the same outcome as last round. Figures are averages over 5 runs.
+In the book, players make their predictions using crib sheets, so I tested whether the pattern-matching memory plays any role. I varied the memory length *m*, where *m* = 0 means simply predicting the same outcome as last round. Figures are averages over 5 runs.
 
 | Memory *m* | 50%: tails (*p* < 0.1 / *p* > 0.9) | 50%: mean *p* | 60%: tails | 60%: mean *p* |
 |---|---|---|---|---|
@@ -64,9 +64,9 @@ To find out what does, I ran one more control at 50% capacity in which each agen
 
 ### Conclusions
 
-1. **Polarisation requires a shared signal, it doesn't require a clever or accurate forecast.** When everyone reacts to the same forecast, agents form two opposing camps (followers and contrarians), and the minority-game payoff weeds out the middle. What the forecast says is irrelevant: a shared coin flip works just as well as pattern-matching.
-2. **The crib sheet is a red herring in this model.** Its memory length has no measurable effect. I found a paper (Cavagna, *Physical Review E*, 1999) which supports my finding that forecasts and the method of forecasting do not affect the polarisation pattern.
-3. **The shift towards following comes from asymmetric capacity.** At 60% capacity, any forecast built from past outcomes, even "same as last time", picks up that going is usually right, so following wins. A random forecast carries no such information.
+1. **Polarisation requires a shared signal, not a clever one.** When everyone reacts to the same forecast, agents form two opposing camps (followers and contrarians), and the minority-game payoff weeds out the middle. What the forecast says is irrelevant: a shared coin flip works just as well as pattern-matching.
+2. **The shift towards following comes from asymmetric capacity.** At 60% capacity, any forecast built from past outcomes, even "same as last time", picks up that going is usually right, so following pays. A random forecast carries no such information.
+3. **The crib sheet is a red herring in this model.** Its memory length has no measurable effect. This echoes a known result in the minority game literature: replacing the real history with a random one changes surprisingly little (Cavagna, *Physical Review E*, 1999).
 
 ## 2. Other simulations
 
