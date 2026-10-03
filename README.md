@@ -72,9 +72,9 @@ To find out what does, I ran one more control at 50% capacity in which each agen
 
 | File | Problem | Simulation | Theory |
 |---|---|---|---|
-| `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 | Standard error ≈ 0.0016, shrinking like 1/√*N* |
-| `pokemon.py` | Coupon collector: expected packs to collect all *n* = 10 cards (10⁵ trials) | ≈ 29.29 | *n*·*H<sub>n</sub>* = 29.29 |
-| `random_walks.py` | Simple symmetric random walk, 100 steps | One sample path | Mean 0, variance *n*, so typical distance from the origin is about √*n* = 10 |
+| `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 | 
+| `pokemon.py` | Coupon collector: expected packs to collect all *n* = 10 cards (10⁵ trials) | ≈ 29.29 |
+| `random_walks.py` | Simple symmetric random walk, 100 steps | One sample path |
 
 ## Running
 
