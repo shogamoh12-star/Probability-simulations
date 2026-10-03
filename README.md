@@ -70,7 +70,7 @@ To find out what does, I ran one more control at 50% capacity in which each agen
 
 ## 2. Other simulations
 
-| File | Problem | Simulation | Theory |
+| File | Problem | Simulation | 
 |---|---|---|---|
 | `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 | 
 | `pokemon.py` | Coupon collector: expected packs to collect all *n* = 10 cards (10⁵ trials) | ≈ 29.29 |
