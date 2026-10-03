@@ -1,6 +1,6 @@
 # Probability Simulations
 
-Python simulations of problems in probability and game theory, with results compared against theory where a closed form exists.
+Python simulations of problems in probability and game theory.
 
 ## 1. El Farol Bar problem: an evolutionary minority game
 
@@ -70,9 +70,9 @@ To find out what does, I ran one more control at 50% capacity in which each agen
 
 ## 2. Other simulations
 
-**| File | Problem | Simulation | **
+| File | Problem | Result |
 |---|---|---|
-| `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 | 
+| `monte_carlo.py` | Estimate π from the fraction of random points in the unit square that land inside the quarter circle (10⁶ points) | ≈ 3.141 |
 | `pokemon.py` | Coupon collector: expected packs to collect all *n* = 10 cards (10⁵ trials) | ≈ 29.29 |
 | `random_walks.py` | Simple symmetric random walk, 100 steps | One sample path |
 
